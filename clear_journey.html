@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLEAR Travel Experience - 2026 World Cup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating particles background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .particle:nth-child(odd) {
+            animation-delay: -2s;
+            animation-duration: 10s;
+        }
+
+        .particle:nth-child(even) {
+            animation-delay: -4s;
+            animation-duration: 12s;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+            position: relative;
+            animation: slideDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 10px rgba(255,255,255,0.2); }
+            to { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.4); }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .language-toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 12px 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            font-size: 1rem;
+        }
+
+        .language-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .language-toggle.active {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            border-color: #ff6b6b;
+            animation: wiggle 0.5s ease-in-out;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 25px;
+            height: calc(100vh - 160px);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .journey-map {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .journey-map::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .journey-path {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 25px;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transform-origin: center;
+            opacity: 0.7;
+            min-height: 180px;
+        }
+
+        .step-card:hover {
+            transform: scale(1.08) translateY(-8px);
+            border-color: #667eea;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+            opacity: 1;
+        }
+
+        .step-card.active {
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            transform: scale(1.12) translateY(-10px);
+            z-index: 10;
+            opacity: 1;
+            box-shadow: 0 25px 50px rgba(79, 172, 254, 0.5);
+        }
+
+        .step-card.completed {
+            background: linear-gradient(45deg, #11998e, #38ef7d);
+            opacity: 0.85;
+            transform: scale(0.98);
+        }
+
+        .step-card.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.8rem;
+            animation: checkmark 0.6s ease-out;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        @keyframes checkmark {
+            0% { transform: scale(0) rotate(180deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .step-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .step-card:hover .step-icon {
+            transform: rotate(360deg) scale(1.15);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .step-card.active .step-icon {
+            background: rgba(255, 255, 255, 0.25);
+            animation: iconPulse 2s infinite;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #333;
+            transition: all 0.3s ease;
+            line-height: 1.3;
+        }
+
+        .step-card.active .step-title {
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: bold;
+            animation: numberBounce 0.6s ease-out;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        @keyframes numberBounce {
+            0% { transform: scale(0); }
+            60% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Partner badges in step cards */
+        .step-partners {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .partner-mini-badge {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            animation: badgeFloat 3s ease-in-out infinite;
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        .step-card.active .partner-mini-badge {
+            background: rgba(255, 255, 255, 0.25);
+            animation: badgeGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+
+        @keyframes badgeGlow {
+            from { box-shadow: 0 0 8px rgba(255,255,255,0.3); }
+            to { box-shadow: 0 0 15px rgba(255,255,255,0.6); }
+        }
+
+        /* Enhanced Connection Lines with Animation */
+        .step-card::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            top: 50%;
+            right: -37px;
+            transform: translateY(-50%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .step-card.active::after,
+        .step-card.completed::after {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            opacity: 1;
+            animation: lineGlow 2s infinite;
+        }
+
+        @keyframes lineGlow {
+            0%, 100% { box-shadow: 0 0 8px rgba(79, 172, 254, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(79, 172, 254, 0.8); }
+        }
+
+        .step-card:nth-child(4)::after {
+            display: none;
+        }
+
+        .step-card:nth-child(4)::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 50px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            bottom: -37px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .step-card:nth-child(4).active::before,
+        .step-card:nth-child(4).completed::before {
+            background: linear-gradient(to bottom, #4facfe, #00f2fe);
+            opacity: 1;
+            animation: lineGlow 2s infinite;
+        }
+
+        .step-card:nth-child(7)::after {
+            display: none;
+        }
+
+        .details-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .step-details {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            height: 58%;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+        }
+
+        .detail-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .detail-title span:first-child {
+            animation: iconSpin 0.6s ease-out;
+            font-size: 2rem;
+        }
+
+        @keyframes iconSpin {
+            from { transform: rotate(-180deg) scale(0); }
+            to { transform: rotate(0deg) scale(1); }
+        }
+
+        .detail-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.7;
+            animation: fadeInText 0.8s ease-out;
+            font-size: 1rem;
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .time-estimate {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            animation: timeGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes timeGlow {
+            from { box-shadow: 0 0 10px rgba(102, 126, 234, 0.3); }
+            to { box-shadow: 0 0 20px rgba(102, 126, 234, 0.6); }
+        }
+
+        .vip-section {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500, #ff6b6b);
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
+            border-radius: 20px;
+            padding: 25px;
+            color: white;
+            height: 40%;
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.3);
+        }
+
+        .vip-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 15px rgba(255,255,255,0.5); }
+            to { text-shadow: 0 0 25px rgba(255,255,255,0.8); }
+        }
+
+        .vip-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .vip-feature {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 18px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+
+        .vip-feature:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        .vip-feature-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            animation: featureFloat 3s ease-in-out infinite;
+        }
+
+        .vip-feature:nth-child(1) .vip-feature-icon { animation-delay: 0s; }
+        .vip-feature:nth-child(2) .vip-feature-icon { animation-delay: 0.5s; }
+        .vip-feature:nth-child(3) .vip-feature-icon { animation-delay: 1s; }
+        .vip-feature:nth-child(4) .vip-feature-icon { animation-delay: 1.5s; }
+
+        @keyframes featureFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 8px;
+            background: linear-gradient(to right, #4facfe, #00f2fe, #4facfe);
+            background-size: 200% 100%;
+            animation: progressFlow 2s linear infinite;
+            transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 0 0 25px 25px;
+            box-shadow: 0 0 15px rgba(79, 172, 254, 0.5);
+        }
+
+        @keyframes progressFlow {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .step-card.appear {
+            animation: stepAppear 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes stepAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(180deg);
+            }
+            100% {
+                opacity: 0.7;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        /* Sound wave animation for active step */
+        .step-card.active::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 3px solid rgba(79, 172, 254, 0.3);
+            border-radius: 25px;
+            animation: soundWave 2s infinite;
+            z-index: -1;
+        }
+
+        @keyframes soundWave {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        /* Journey status indicator */
+        .journey-status {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #333;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #11998e, #38ef7d);
+            animation: statusPulse 2s infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1.8fr 1fr;
+            }
+            
+            .step-card {
+                padding: 20px;
+                min-height: 160px;
+            }
+            
+            .step-title {
+                font-size: 1rem;
+            }
+            
+            .step-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: 2fr 1fr;
+            }
+            
+            .journey-path {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles background -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <div class="header">
+            <button class="language-toggle" onclick="toggleLanguage()" id="langToggle">
+                🌐 Español
+            </button>
+            <h1 id="mainTitle">✈️ CLEAR Travel Experience</h1>
+            <p id="subtitle">Premium Journey Dashboard • 2026 FIFA World Cup Mexico City</p>
+        </div>
+
+        <div class="main-content">
+            <div class="journey-map">
+                <div class="journey-status">
+                    <div class="status-dot"></div>
+                    <span id="statusText">Journey Active</span>
+                </div>
+                
+                <div class="journey-path">
+                    <!-- Step 1 -->
+                    <div class="step-card active appear" onclick="showStep(1)" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-icon">📲</div>
+                        <div class="step-title">Pre-Travel Setup</div>
+                        <div class="step-partners">
+                            <div class="partner-mini-badge">CLEAR Plus</div>
+                            <div class="partner-mini-badge">FIFA ID</div>
+                            <div class="partner-mini-badge">TSA PreCheck</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step-card appear" onclick="showStep(2)" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-icon">🛫</div>
+                        <div class="step-title">Airport Departure</div>
+                        <div class="step-partners">
+                            <div class="partner-mini-badge">Biometric ID</div>
+                            <div class="partner-mini-badge">Sky Club</div>
+                            <div class="partner-mini-badge">Priority Boarding</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="step-card appear" onclick="showStep(3)" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-icon">🌍</div>
+                        <div class="step-title">In-Flight Experience</div>
+                        <div class="step-partners">
+                            <div class="partner-mini-badge">Live Updates</div>
+                            <div class="partner-mini-badge">Premium WiFi</div>
+                            <div class="partner-mini-badge">Concierge</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="step-card appear" onclick="showStep(4)" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-icon">🛬</div>
+                        <div class="step-title">Mexico City Arrival</div>
+                        <div class="step-partners">
+                            <div class="partner-mini-badge">Fast Track</div>
+                            <div class="partner-mini-badge">Auto-Dispatch</div>
+                            <div class="partner-mini-badge">Digital Customs</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="step-card appear" onclick="showStep(5)" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-icon">🚙</div>
+                        <div class="step-title">Premium Transport</div>
+                        <div class="step-partners">
+                            <div class="partner-mini-badge">Verified Driver</div>
+                            <div class="partner-mini-badge">Live Tracking</div>
+                            <div class="partner-mini-badge">Contactless</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div class="step-card appear" onclick="showStep(6)" data-step="6">
+                        <div class="step-number">6</div>
+                        <div class="step-icon">🏨</div>
+                        <div class="step-title">Hotel Experience</div>
+                        <div class="step-partners">
+                            <div class="partner-mini-badge">Digital Key</div>
+                            <div class="partner-mini-badge">VIP Service</div>
+                            <div class="partner-mini-badge">Dining Priority</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 7 -->
+                    <div class="step-card appear" onclick="showStep(7)" data-step="7">
+                        <div class="step-number">7</div>
+                        <div class="step-icon">⚽</div>
+                        <div class="step-title">Stadium Access</div>
+                        <div class="step-partners">
+                            <div class="partner-mini-badge">VIP Entry</div>
+                            <div class="partner-mini-badge">Facial Recognition</div>
+                            <div class="partner-mini-badge">Premium Seats</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-bar" id="progressBar" style="width: 14.3%;"></div>
+            </div>
+
+            <div class="details-panel">
+                <div class="step-details" id="stepDetails">
+                    <div class="detail-title">
+                        <span id="detailIcon">📲</span>
+                        <span id="detailTitle">Pre-Travel Setup</span>
+                    </div>
+                    <div class="time-estimate" id="timeEstimate">
+                        ⏱️ 2-3 minutes • Complete once
+                    </div>
+                    <div class="detail-description" id="detailDescription">
+                        Complete your biometric enrollment and securely upload travel documents through the CLEAR mobile app. Seamlessly integrate your FIFA World Cup tickets with your CLEAR profile to unlock expedited entry and premium services throughout your entire journey.
+                    </div>
+                </div>
+
+                <div class="vip-section">
+                    <div class="vip-title" id="vipTitle">✨ Premium Experience Features</div>
+                    <div class="vip-features">
+                        <div class="vip-feature">
+                            <div class="vip-feature-icon">🎯</div>
+                            <div id="vipConcierge">24/7 Concierge Support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Journey step data with multilingual support
+        const journeySteps = {
+            en: {
+                1: {
+                    icon: "📲",
+                    title: "Pre-Travel Setup",
+                    time: "⏱️ 2-3 minutes • Complete once",
+                    description: "Complete your biometric enrollment and securely upload travel documents through the CLEAR mobile app. Seamlessly integrate your FIFA World Cup tickets with your CLEAR profile to unlock expedited entry and premium services throughout your entire journey."
+                },
+                2: {
+                    icon: "🛫",
+                    title: "Airport Departure",
+                    time: "⏱️ 5-10 minutes • Saved time",
+                    description: "Skip traditional security lines with CLEAR's biometric verification. Access exclusive Sky Club lounges and enjoy priority boarding with your verified identity. Your journey begins stress-free with premium amenities and personalized service."
+                },
+                3: {
+                    icon: "🌍",
+                    title: "In-Flight Experience",
+                    time: "⏱️ During flight • Continuous updates",
+                    description: "Stay connected with complimentary premium WiFi and receive real-time updates about your World Cup experience. Our dedicated concierge team monitors your itinerary and prepares personalized recommendations for your Mexico City arrival."
+                },
+                4: {
+                    icon: "🛬",
+                    title: "Mexico City Arrival",
+                    time: "⏱️ 3-5 minutes • Express processing",
+                    description: "Experience expedited immigration and customs clearance with digital document verification. Your verified CLEAR profile enables seamless entry processing, while our ground team coordinates your premium transport to ensure zero waiting time."
+                },
+                5: {
+                    icon: "🚙",
+                    title: "Premium Transport",
+                    time: "⏱️ Immediate pickup • Live tracking",
+                    description: "Your verified driver arrives precisely on schedule with live tracking and contactless payment. Enjoy luxury vehicles equipped with WiFi, refreshments, and real-time traffic optimization to reach your destination efficiently."
+                },
+                6: {
+                    icon: "🏨",
+                    title: "Hotel Experience",
+                    time: "⏱️ Instant check-in • Digital access",
+                    description: "Skip the front desk with digital key delivery and express check-in. Access VIP concierge services, priority restaurant reservations, and exclusive amenities. Your room preferences are pre-configured for immediate comfort."
+                },
+                7: {
+                    icon: "⚽",
+                    title: "Stadium Access",
+                    time: "⏱️ VIP entry • No queues",
+                    description: "Enter the stadium through exclusive VIP gates with facial recognition technology. Access premium seating areas, complimentary concessions, and dedicated hospitality suites. Capture professional photos with World Cup memorabilia."
+                }
+            },
+            es: {
+                1: {
+                    icon: "📲",
+                    title: "Configuración Pre-Viaje",
+                    time: "⏱️ 2-3 minutos • Completar una vez",
+                    description: "Complete su inscripción biométrica y cargue de forma segura los documentos de viaje a través de la aplicación móvil CLEAR. Integre perfectamente sus boletos de la Copa Mundial FIFA con su perfil CLEAR para desbloquear entrada expedita y servicios premium durante todo su viaje."
+                },
+                2: {
+                    icon: "🛫",
+                    title: "Salida del Aeropuerto",
+                    time: "⏱️ 5-10 minutos • Tiempo ahorrado",
+                    description: "Evite las filas de seguridad tradicionales con la verificación biométrica de CLEAR. Acceda a los salones exclusivos Sky Club y disfrute del embarque prioritario con su identidad verificada. Su viaje comienza sin estrés con amenidades premium y servicio personalizado."
+                },
+                3: {
+                    icon: "🌍",
+                    title: "Experiencia de Vuelo",
+                    time: "⏱️ Durante el vuelo • Actualizaciones continuas",
+                    description: "Manténgase conectado con WiFi premium gratuito y reciba actualizaciones en tiempo real sobre su experiencia de la Copa Mundial. Nuestro equipo de conserjes dedicado monitorea su itinerario y prepara recomendaciones personalizadas para su llegada a Ciudad de México."
+                },
+                4: {
+                    icon: "🛬",
+                    title: "Llegada a Ciudad de México",
+                    time: "⏱️ 3-5 minutos • Procesamiento express",
+                    description: "Experimente el despacho expedito de inmigración y aduanas con verificación digital de documentos. Su perfil CLEAR verificado permite un procesamiento de entrada sin problemas, mientras nuestro equipo en tierra coordina su transporte premium para asegurar cero tiempo de espera."
+                },
+                5: {
+                    icon: "🚙",
+                    title: "Transporte Premium",
+                    time: "⏱️ Recogida inmediata • Seguimiento en vivo",
+                    description: "Su conductor verificado llega precisamente a tiempo con seguimiento en vivo y pago sin contacto. Disfrute de vehículos de lujo equipados con WiFi, refrigerios y optimización de tráfico en tiempo real para llegar a su destino de manera eficiente."
+                },
+                6: {
+                    icon: "🏨",
+                    title: "Experiencia Hotelera",
+                    time: "⏱️ Check-in instantáneo • Acceso digital",
+                    description: "Evite la recepción con entrega de llave digital y check-in express. Acceda a servicios de conserje VIP, reservas prioritarias en restaurantes y amenidades exclusivas. Sus preferencias de habitación están preconfiguradas para comodidad inmediata."
+                },
+                7: {
+                    icon: "⚽",
+                    title: "Acceso al Estadio",
+                    time: "⏱️ Entrada VIP • Sin colas",
+                    description: "Ingrese al estadio a través de puertas VIP exclusivas con tecnología de reconocimiento facial. Acceda a áreas de asientos premium, concesiones gratuitas y suites de hospitalidad dedicadas. Capture fotos profesionales con memorabilia de la Copa Mundial."
+                }
+            }
+        };
+
+        // UI text translations
+        const uiText = {
+            en: {
+                mainTitle: "✈️ CLEAR Travel Experience",
+                subtitle: "Premium Journey Dashboard • 2026 FIFA World Cup Mexico City",
+                statusText: "Journey Active",
+                vipTitle: "✨ Premium Experience Features",
+                vipLounge: "Exclusive Lounge Access",
+                vipPayment: "Biometric Payments",
+                vipPhotos: "Professional Photography",
+                vipConcierge: "24/7 Concierge Support",
+                langButton: "🌐 Español"
+            },
+            es: {
+                mainTitle: "✈️ Experiencia de Viaje CLEAR",
+                subtitle: "Panel Premium de Viaje • Copa Mundial FIFA 2026 Ciudad de México",
+                statusText: "Viaje Activo",
+                vipTitle: "✨ Características de Experiencia Premium",
+                vipLounge: "Acceso Exclusivo a Salones",
+                vipPayment: "Pagos Biométricos",
+                vipPhotos: "Fotografía Profesional",
+                vipConcierge: "Soporte de Conserje 24/7",
+                langButton: "🌐 English"
+            }
+        };
+
+        let currentLanguage = 'en';
+        let currentStep = 1;
+
+        // Initialize particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Show step details
+        function showStep(stepNumber) {
+            // Remove active state from all cards
+            document.querySelectorAll('.step-card').forEach(card => {
+                card.classList.remove('active');
+                if (parseInt(card.dataset.step) < stepNumber) {
+                    card.classList.add('completed');
+                } else {
+                    card.classList.remove('completed');
+                }
+            });
+
+            // Add active state to selected card
+            const activeCard = document.querySelector(`[data-step="${stepNumber}"]`);
+            if (activeCard) {
+                activeCard.classList.add('active');
+                activeCard.classList.remove('completed');
+            }
+
+            // Update step details
+            const stepData = journeySteps[currentLanguage][stepNumber];
+            if (stepData) {
+                document.getElementById('detailIcon').textContent = stepData.icon;
+                document.getElementById('detailTitle').textContent = stepData.title;
+                document.getElementById('timeEstimate').textContent = stepData.time;
+                document.getElementById('detailDescription').textContent = stepData.description;
+            }
+
+            // Update progress bar
+            const progressWidth = (stepNumber / 7) * 100;
+            document.getElementById('progressBar').style.width = progressWidth + '%';
+
+            currentStep = stepNumber;
+
+            // Add visual feedback
+            activeCard.style.transform = 'scale(1.15) translateY(-12px)';
+            setTimeout(() => {
+                activeCard.style.transform = '';
+            }, 200);
+        }
+
+        // Toggle language
+        function toggleLanguage() {
+            const langToggle = document.getElementById('langToggle');
+            langToggle.classList.add('active');
+            
+            setTimeout(() => {
+                langToggle.classList.remove('active');
+            }, 500);
+
+            currentLanguage = currentLanguage === 'en' ? 'es' : 'en';
+            updateLanguage();
+        }
+
+        // Update all text based on current language
+        function updateLanguage() {
+            const texts = uiText[currentLanguage];
+            
+            // Update main UI elements
+            document.getElementById('mainTitle').textContent = texts.mainTitle;
+            document.getElementById('subtitle').textContent = texts.subtitle;
+            document.getElementById('statusText').textContent = texts.statusText;
+            document.getElementById('vipTitle').textContent = texts.vipTitle;
+            document.getElementById('vipLounge').textContent = texts.vipLounge;
+            document.getElementById('vipPayment').textContent = texts.vipPayment;
+            document.getElementById('vipPhotos').textContent = texts.vipPhotos;
+            document.getElementById('vipConcierge').textContent = texts.vipConcierge;
+            document.getElementById('langToggle').textContent = texts.langButton;
+
+            // Update step titles
+            document.querySelectorAll('.step-card').forEach(card => {
+                const stepNum = parseInt(card.dataset.step);
+                const stepData = journeySteps[currentLanguage][stepNum];
+                if (stepData) {
+                    const titleElement = card.querySelector('.step-title');
+                    if (titleElement) {
+                        titleElement.textContent = stepData.title;
+                    }
+                }
+            });
+
+            // Update current step details
+            showStep(currentStep);
+        }
+
+        // Simulate journey progression
+        function simulateJourney() {
+            let step = 1;
+            const progressInterval = setInterval(() => {
+                if (step <= 7) {
+                    showStep(step);
+                    step++;
+                } else {
+                    clearInterval(progressInterval);
+                    // Reset to first step after completion
+                    setTimeout(() => {
+                        simulateJourney();
+                    }, 100000);
+                }
+            }, 100000);
+        }
+
+        // Auto-advance demo (optional)
+        function startAutoDemo() {
+            setTimeout(() => {
+                simulateJourney();
+            }, 100000);
+        }
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            showStep(1);
+            
+            // Add staggered appear animation to step cards
+            document.querySelectorAll('.step-card').forEach((card, index) => {
+                card.style.animationDelay = (index * 0.1) + 's';
+            });
+
+            // Optional: Start auto-demo after 10 seconds of inactivity
+            let inactivityTimer;
+            function resetInactivityTimer() {
+                clearTimeout(inactivityTimer);
+                inactivityTimer = setTimeout(() => {
+                    startAutoDemo();
+                }, 10000);
+            }
+
+            // Reset timer on user interaction
+            document.addEventListener('click', resetInactivityTimer);
+            document.addEventListener('mousemove', resetInactivityTimer);
+            resetInactivityTimer();
+
+            // Add keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' && currentStep < 7) {
+                    showStep(currentStep + 1);
+                } else if (e.key === 'ArrowLeft' && currentStep > 1) {
+                    showStep(currentStep - 1);
+                } else if (e.key === 'l' || e.key === 'L') {
+                    toggleLanguage();
+                }
+            });
+        });
+
+        // Add smooth scrolling and enhanced interactions
+        document.addEventListener('wheel', function(e) {
+            if (Math.abs(e.deltaY) > 50) {
+                e.preventDefault();
+                if (e.deltaY > 0 && currentStep < 7) {
+                    showStep(currentStep + 1);
+                } else if (e.deltaY < 0 && currentStep > 1) {
+                    showStep(currentStep - 1);
+                }
+            }
+        }, { passive: false });
+
+        // Touch/swipe support for mobile
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartY - touchEndY;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0 && currentStep < 7) {
+                    showStep(currentStep + 1);
+                } else if (diff < 0 && currentStep > 1) {
+                    showStep(currentStep - 1);
+                }
+            }
+        }
+    </script>
+</body>
+</html>-feature">
+                            <div class="vip-feature-icon">👑</div>
+                            <div id="vipLounge">Exclusive Lounge Access</div>
+                        </div>
+                        <div class="vip-feature">
+                            <div class="vip-feature-icon">😊</div>
+                            <div id="vipPayment">Biometric Payments</div>
+                        </div>
+                        <div class="vip-feature">
+                            <div class="vip-feature-icon">📸</div>
+                            <div id="vipPhotos">Professional Photography</div>
+                        </div>
+                        <div class="vip
